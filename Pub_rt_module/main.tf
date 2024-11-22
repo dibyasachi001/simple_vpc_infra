@@ -14,7 +14,9 @@ resource "aws_route_table" "public_route_table" {
 
 #Public Route Table Association with Public Subnet
 resource "aws_route_table_association" "public_route_table_association" {
-  for_each = {for subnet in var.subnetids : subnet => subnet}
+  # for_each = {for subnet in var.subnetids : subnet => subnet}
+  for_each = toset(var.subnetids)
   subnet_id = each.value
   route_table_id = aws_route_table.public_route_table.id
-}  
+#   route_table_id = aws_route_table.public_route_table.id
+} 
